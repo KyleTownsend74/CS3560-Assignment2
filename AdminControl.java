@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,10 +26,10 @@ public class AdminControl extends JFrame {
 
         // Set up tree view panel
         treePanel = new JPanel();
+        treePanel.setLayout(new BoxLayout(treePanel, BoxLayout.PAGE_AXIS));
         Color treePanelColor = new Color(204, 230, 255);
         treePanel.setBackground(treePanelColor);
-        JLabel treeLabel = new JLabel();
-        treeLabel.setText("Tree View");
+        JLabel treeLabel = new JLabel("Tree View");
         treePanel.add(treeLabel);
         this.add(treePanel);
         drawTree();
