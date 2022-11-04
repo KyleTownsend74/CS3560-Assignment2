@@ -3,7 +3,6 @@ package user;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class UserGroup extends UserComponent {
@@ -22,9 +21,7 @@ public class UserGroup extends UserComponent {
 
     public void display(JPanel displayPanel) {
         // Dislay ID for current UserGroup
-        JLabel label = new JLabel();
-        label.setText("UserGroup - " + getId());
-        displayPanel.add(label);
+        displayPanel.add(createLabel("UserGroup - " + getId()));
 
         // Display all UserComponents in this group
         for(UserComponent userComponent : userComponents) {

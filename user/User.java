@@ -2,7 +2,6 @@ package user;
 
 import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class User extends UserComponent {
@@ -17,9 +16,7 @@ public class User extends UserComponent {
 
     public void display(JPanel displayPanel) {
         // Dislay ID for current User
-        JLabel label = new JLabel();
-        label.setText("User - " + getId());
-        displayPanel.add(label);
+        displayPanel.add(createLabel("User - " + getId()));
     }
 
 }

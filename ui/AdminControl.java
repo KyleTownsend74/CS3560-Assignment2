@@ -1,3 +1,4 @@
+package ui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,8 @@ import user.User;
 import user.UserGroup;
 
 public class AdminControl extends JFrame {
+
+    public static JLabel curUserSelected;
 
     private UserGroup root;
     private JPanel treePanel;
