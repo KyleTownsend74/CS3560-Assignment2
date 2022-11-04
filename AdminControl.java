@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -14,6 +16,57 @@ public class AdminControl extends JFrame {
 
     private UserGroup root;
     private JPanel treePanel;
+    private JButton btnAddUser;
+    private JButton btnAddGroup;
+    private JButton btnOpenUserView;
+    private JButton btnShowUserTotal;
+    private JButton btnShowGroupTotal;
+    private JButton btnShowMessagesTotal;
+    private JButton btnShowPosPercent;
+
+    // Action listeners for each button on the admin control
+    private ActionListener actAddUser = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Add User");
+        }
+    };
+    private ActionListener actAddGroup = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Add Group");
+        }
+    };
+    private ActionListener actOpenUserView = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Open User View");
+        }
+    };
+    private ActionListener actShowUserTotal = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Show User Total");
+        }
+    };
+    private ActionListener actShowGroupTotal = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Show Group Total");
+        }
+    };
+    private ActionListener actShowMessagesTotal = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Show Messages Total");
+        }
+    };
+    private ActionListener actShowPosPercent = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Show Positive Percentage");
+        }
+    };
 
     public AdminControl () {
         root = new UserGroup("Root");
@@ -46,11 +99,13 @@ public class AdminControl extends JFrame {
         addPanel.setLayout(new GridLayout(2, 2, 4, 4));
         JTextField userTextField = new JTextField(16);
         addPanel.add(userTextField);
-        JButton btnAddUser = new JButton("Add User");
+        btnAddUser = new JButton("Add User");
+        btnAddUser.addActionListener(actAddUser);
         addPanel.add(btnAddUser);
         JTextField groupTextField = new JTextField(16);
         addPanel.add(groupTextField);
-        JButton btnAddGroup = new JButton("Add Group");
+        btnAddGroup = new JButton("Add Group");
+        btnAddGroup.addActionListener(actAddGroup);
         addPanel.add(btnAddGroup);
         controlPanel.add(addPanel);
 
@@ -58,7 +113,8 @@ public class AdminControl extends JFrame {
         JPanel uvOpenPanel = new JPanel();
         uvOpenPanel.setBackground(controlPanelColor);
         uvOpenPanel.setLayout(new GridLayout(2, 1));
-        JButton btnOpenUserView = new JButton("Open User View");
+        btnOpenUserView = new JButton("Open User View");
+        btnOpenUserView.addActionListener(actOpenUserView);
         uvOpenPanel.add(btnOpenUserView);
         controlPanel.add(uvOpenPanel);
 
@@ -66,13 +122,17 @@ public class AdminControl extends JFrame {
         JPanel statsPanel = new JPanel();
         statsPanel.setBackground(controlPanelColor);
         statsPanel.setLayout(new GridLayout(2, 2, 4, 4));
-        JButton btnShowUserTotal = new JButton("Show User Total");
+        btnShowUserTotal = new JButton("Show User Total");
+        btnShowUserTotal.addActionListener(actShowUserTotal);
         statsPanel.add(btnShowUserTotal);
-        JButton btnShowGroupTotal = new JButton("Show Group Total");
+        btnShowGroupTotal = new JButton("Show Group Total");
+        btnShowGroupTotal.addActionListener(actShowGroupTotal);
         statsPanel.add(btnShowGroupTotal);
-        JButton btnShowMessagesTotal = new JButton("Show Messages Total");
+        btnShowMessagesTotal = new JButton("Show Messages Total");
+        btnShowMessagesTotal.addActionListener(actShowMessagesTotal);
         statsPanel.add(btnShowMessagesTotal);
-        JButton btnShowPosPercent = new JButton("Show Positive Percentage");
+        btnShowPosPercent = new JButton("Show Positive Percentage");
+        btnShowPosPercent.addActionListener(actShowPosPercent);
         statsPanel.add(btnShowPosPercent);
         controlPanel.add(statsPanel);
 
