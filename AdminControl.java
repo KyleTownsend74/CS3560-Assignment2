@@ -10,12 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import user.User;
 import user.UserGroup;
 
 public class AdminControl extends JFrame {
 
     private UserGroup root;
     private JPanel treePanel;
+    private JTextField textUser;
+    private JTextField textGroup;
     private JButton btnAddUser;
     private JButton btnAddGroup;
     private JButton btnOpenUserView;
@@ -28,13 +31,15 @@ public class AdminControl extends JFrame {
     private ActionListener actAddUser = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Add User");
+            root.add(new User(textUser.getText()));
+            drawTree();
         }
     };
     private ActionListener actAddGroup = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Add Group");
+            root.add(new UserGroup(textGroup.getText()));
+            drawTree();
         }
     };
     private ActionListener actOpenUserView = new ActionListener() {
@@ -82,8 +87,6 @@ public class AdminControl extends JFrame {
         treePanel.setLayout(new BoxLayout(treePanel, BoxLayout.PAGE_AXIS));
         Color treePanelColor = new Color(204, 230, 255);
         treePanel.setBackground(treePanelColor);
-        JLabel treeLabel = new JLabel("Tree View");
-        treePanel.add(treeLabel);
         this.add(treePanel);
         drawTree();
 
@@ -97,13 +100,13 @@ public class AdminControl extends JFrame {
         JPanel addPanel = new JPanel();
         addPanel.setBackground(controlPanelColor);
         addPanel.setLayout(new GridLayout(2, 2, 4, 4));
-        JTextField userTextField = new JTextField(16);
-        addPanel.add(userTextField);
+        textUser = new JTextField(16);
+        addPanel.add(textUser);
         btnAddUser = new JButton("Add User");
         btnAddUser.addActionListener(actAddUser);
         addPanel.add(btnAddUser);
-        JTextField groupTextField = new JTextField(16);
-        addPanel.add(groupTextField);
+        textGroup = new JTextField(16);
+        addPanel.add(textGroup);
         btnAddGroup = new JButton("Add Group");
         btnAddGroup.addActionListener(actAddGroup);
         addPanel.add(btnAddGroup);
@@ -141,7 +144,12 @@ public class AdminControl extends JFrame {
     }
 
     public void drawTree() {
+        treePanel.removeAll();
+        JLabel treeLabel = new JLabel("Tree View");
+        treePanel.add(treeLabel);
         root.display(treePanel);
+        treePanel.revalidate();
+        treePanel.repaint();
     }
 
 }
