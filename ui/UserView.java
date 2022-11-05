@@ -10,18 +10,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import user.UserComponent;
+
 public class UserView extends JFrame {
     
+    private UserComponent userComponent;
     private JTextField textFollow;
     private JTextField textTweet;
     private JButton btnFollow;
     private JButton btnTweet;
 
-    public UserView() {
+    public UserView(UserComponent userComponent) {
+        this.userComponent = userComponent;
+
         Color backgroundColor = new Color(220, 240, 255);
 
         // Set up frame
-        this.setTitle("User View");
+        this.setTitle("User View - " + userComponent.getId());
         this.setSize(500, 500);
         this.setLayout(new GridLayout(0, 1));
         this.setBackground(backgroundColor);

@@ -12,11 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import user.User;
+import user.UserComponent;
 import user.UserGroup;
 
 public class AdminControl extends JFrame {
 
-    public static JLabel curUserSelected;
+    public static UserComponent curUserSelected;
 
     private UserGroup root;
     private JPanel treePanel;
@@ -48,7 +49,7 @@ public class AdminControl extends JFrame {
     private ActionListener actOpenUserView = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new UserView();
+            new UserView(curUserSelected);
         }
     };
     private ActionListener actShowUserTotal = new ActionListener() {

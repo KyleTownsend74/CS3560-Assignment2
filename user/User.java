@@ -16,7 +16,7 @@ public class User extends UserComponent {
 
     public void display(JPanel displayPanel) {
         // Dislay ID for current User
-        displayPanel.add(createLabel("User - " + getId()));
+        displayPanel.add(getLabel("User - " + getId()));
     }
 
 }

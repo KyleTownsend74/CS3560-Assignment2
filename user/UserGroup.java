@@ -21,7 +21,7 @@ public class UserGroup extends UserComponent {
 
     public void display(JPanel displayPanel) {
         // Dislay ID for current UserGroup
-        displayPanel.add(createLabel("UserGroup - " + getId()));
+        displayPanel.add(getLabel("UserGroup - " + getId()));
 
         // Display all UserComponents in this group
         for(UserComponent userComponent : userComponents) {

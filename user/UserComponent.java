@@ -15,6 +15,7 @@ public abstract class UserComponent {
     private static final Color SELECTED = new Color(160, 180, 255);
 
     private String id;
+    private JLabel label;
 
     public UserComponent(String id) {
         this.id = id;
@@ -28,25 +29,27 @@ public abstract class UserComponent {
         return id;
     }
 
-    protected JLabel createLabel(String labelText) {
-        JLabel label = new JLabel();
-        label.setText(labelText);
-        label.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JLabel curSelected = AdminControl.curUserSelected;
-                
-                if(curSelected != null) {
-                    curSelected.setOpaque(false);
-                    curSelected.setBackground(TRANSPARENT);
+    protected JLabel getLabel(String labelText) {
+        if(label == null) {
+            label = new JLabel();
+            label.setText(labelText);
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    UserComponent curUserSelected = AdminControl.curUserSelected;
+                    
+                    if(curUserSelected != null) {
+                        JLabel curSelectedLabel = curUserSelected.getLabel(null);
+                        curSelectedLabel.setOpaque(false);
+                        curSelectedLabel.setBackground(TRANSPARENT);
+                    }
 
+                    label.setOpaque(true);
+                    label.setBackground(SELECTED);
+                    AdminControl.curUserSelected = UserComponent.this;
                 }
-
-                label.setOpaque(true);
-                label.setBackground(SELECTED);
-                AdminControl.curUserSelected = label;
-            }
-        });
+            });
+        }
 
         return label;
     }
