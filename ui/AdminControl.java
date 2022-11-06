@@ -17,6 +17,8 @@ import user.UserGroup;
 
 public class AdminControl extends JFrame {
 
+    private static AdminControl instance;
+
     public static UserComponent curUserSelected;
 
     private UserGroup root;
@@ -77,7 +79,7 @@ public class AdminControl extends JFrame {
         }
     };
 
-    public AdminControl () {
+    private AdminControl () {
         root = new UserGroup("Root");
 
         // Set up frame
@@ -145,6 +147,14 @@ public class AdminControl extends JFrame {
 
         this.add(controlPanel);
         this.setVisible(true);
+    }
+
+    public static AdminControl getInstance() {
+        if(instance == null) {
+            instance = new AdminControl();
+        }
+
+        return instance;
     }
 
     public void drawTree() {
