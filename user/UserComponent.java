@@ -14,6 +14,9 @@ public abstract class UserComponent {
     private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
     private static final Color SELECTED = new Color(160, 180, 255);
 
+    // Spacing to add to start of label for UserComponent in tree view
+    protected static int spacing = 0;
+
     private String id;
     private JLabel label;
 
@@ -32,6 +35,7 @@ public abstract class UserComponent {
     protected JLabel getLabel(String labelText) {
         if(label == null) {
             label = new JLabel();
+            labelText = String.format("%" + (spacing + labelText.length()) + "s", labelText);
             label.setText(labelText);
             label.addMouseListener(new MouseAdapter() {
                 @Override

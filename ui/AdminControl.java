@@ -37,14 +37,14 @@ public class AdminControl extends JFrame {
     private ActionListener actAddUser = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            root.add(new User(textUser.getText()));
+            addToGroup(new User(textUser.getText()));
             drawTree();
         }
     };
     private ActionListener actAddGroup = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            root.add(new UserGroup(textGroup.getText()));
+            addToGroup(new UserGroup(textGroup.getText()));
             drawTree();
         }
     };
@@ -155,6 +155,18 @@ public class AdminControl extends JFrame {
         }
 
         return instance;
+    }
+
+    // Add a UserComponent to a UserGroup
+    private void addToGroup(UserComponent componentToAdd) {
+        // If a UserGroup is selected, add the UserComponent to the currently
+        // selected group. Otherwise, add it to the root group
+        if(curUserSelected instanceof UserGroup) {
+            ((UserGroup) curUserSelected).add(componentToAdd);
+        }
+        else {
+            root.add(componentToAdd);
+        }
     }
 
     public void drawTree() {

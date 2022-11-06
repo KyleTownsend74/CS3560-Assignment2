@@ -22,11 +22,14 @@ public class UserGroup extends UserComponent {
     public void display(JPanel displayPanel) {
         // Dislay ID for current UserGroup
         displayPanel.add(getLabel("UserGroup - " + getId()));
+        spacing += 2;
 
         // Display all UserComponents in this group
         for(UserComponent userComponent : userComponents) {
             userComponent.display(displayPanel);
         }
+
+        spacing -= 2;
     }
 
 }
