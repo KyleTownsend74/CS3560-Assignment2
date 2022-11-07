@@ -10,4 +10,12 @@ public class Tweet {
         this.message = message;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
 }

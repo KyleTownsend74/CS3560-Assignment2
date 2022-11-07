@@ -12,11 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import user.UserComponent;
+import tweet.Tweet;
+import user.User;
 
 public class UserView extends JFrame {
     
-    private UserComponent userComponent;
+    private User user;
     private JTextField textFollow;
     private JTextField textTweet;
     private JButton btnFollow;
@@ -26,23 +27,30 @@ public class UserView extends JFrame {
     private ActionListener actFollow = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Followed User");
+            User userToFollow = User.getUserById(textFollow.getText());
+            
+            if(userToFollow != null) {
+                user.follow(userToFollow);
+            }
+            else {
+                System.out.println("Invalid User ID");
+            }
         }
     };
     private ActionListener actTweet = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Tweeted");
+            user.post(new Tweet(user.getId(), textTweet.getText()));
         }
     };
 
-    public UserView(UserComponent userComponent) {
-        this.userComponent = userComponent;
+    public UserView(User user) {
+        this.user = user;
 
         Color backgroundColor = new Color(220, 240, 255);
 
         // Set up frame
-        this.setTitle("User View - " + userComponent.getId());
+        this.setTitle("User View - " + user.getId());
         this.setSize(500, 500);
         this.setLayout(new GridLayout(0, 1));
         this.setBackground(backgroundColor);

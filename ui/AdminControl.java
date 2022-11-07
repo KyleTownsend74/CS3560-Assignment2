@@ -51,7 +51,9 @@ public class AdminControl extends JFrame {
     private ActionListener actOpenUserView = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new UserView(curUserSelected);
+            if(curUserSelected instanceof User) {
+                new UserView((User) curUserSelected);
+            }
         }
     };
     private ActionListener actShowUserTotal = new ActionListener() {
