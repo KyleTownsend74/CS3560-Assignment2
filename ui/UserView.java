@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,6 +21,20 @@ public class UserView extends JFrame {
     private JTextField textTweet;
     private JButton btnFollow;
     private JButton btnTweet;
+
+    // Action listeners for each button in the user view
+    private ActionListener actFollow = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Followed User");
+        }
+    };
+    private ActionListener actTweet = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Tweeted");
+        }
+    };
 
     public UserView(UserComponent userComponent) {
         this.userComponent = userComponent;
@@ -38,6 +54,7 @@ public class UserView extends JFrame {
         textFollow = new JTextField(16);
         followControlPanel.add(textFollow);
         btnFollow = new JButton("Follow User");
+        btnFollow.addActionListener(actFollow);
         followControlPanel.add(btnFollow);
         this.add(followControlPanel);
 
@@ -56,6 +73,7 @@ public class UserView extends JFrame {
         textTweet = new JTextField(16);
         tweetPanel.add(textTweet);
         btnTweet = new JButton("Post Tweet");
+        btnTweet.addActionListener(actTweet);
         tweetPanel.add(btnTweet);
         this.add(tweetPanel);
 
