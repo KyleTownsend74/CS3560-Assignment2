@@ -8,13 +8,14 @@ import javax.swing.JPanel;
 import observable.Observer;
 import tweet.PostedTweets;
 import tweet.Tweet;
+import ui.UserView;
 
 public class User extends UserComponent implements Observer {
     
     private static List<User> allUsers = new ArrayList<>();
 
-    private List<String> followers;
-    private List<String> followings;
+    private List<User> followers;
+    private List<User> followings;
 
     // Each User has an object holding the Tweets that they themselves have posted.
     // This object is a Subject for other Users (Observers) to subscribe to
@@ -24,6 +25,7 @@ public class User extends UserComponent implements Observer {
     public User(String id) {
         super(id);
         allUsers.add(this);
+        followings = new ArrayList<>();
         tweetsPosted = new PostedTweets();
     }
 
@@ -50,6 +52,26 @@ public class User extends UserComponent implements Observer {
 
     public void follow(User user) {
         user.tweetsPosted.attachObserver(this);
+        followings.add(user);
+    }
+
+    // Bind the user view to observe all of the tweets from the users
+    // this user is following
+    public void bindUserView(UserView userView) {
+        for(User followedUser : followings) {
+            followedUser.tweetsPosted.attachObserver(userView);
+        }
+    }
+
+    public void unbindUserView(UserView userView) {
+        for(User followedUser : followings) {
+            followedUser.tweetsPosted.detachObserver(userView);
+        }
+    }
+
+    public void rebindUserView(UserView userView) {
+        unbindUserView(userView);
+        bindUserView(userView);
     }
 
     @Override

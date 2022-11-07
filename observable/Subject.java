@@ -15,6 +15,10 @@ public abstract class Subject {
         observers.add(observer);
     }
 
+    public void detachObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
     public void notifyObservers() {
         for(Observer observer : observers) {
             observer.update();

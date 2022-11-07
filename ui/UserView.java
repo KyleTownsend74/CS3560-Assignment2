@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,10 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import observable.Observer;
 import tweet.Tweet;
 import user.User;
 
-public class UserView extends JFrame {
+public class UserView extends JFrame implements Observer {
     
     private User user;
     private JTextField textFollow;
@@ -31,6 +35,8 @@ public class UserView extends JFrame {
             
             if(userToFollow != null) {
                 user.follow(userToFollow);
+                // There is now a new user to follow, so need to rebind user view
+                user.rebindUserView(UserView.this);
             }
             else {
                 System.out.println("Invalid User ID");
@@ -44,8 +50,17 @@ public class UserView extends JFrame {
         }
     };
 
+    // Window listener for when this view is closed
+    private WindowListener windowClose = new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            user.unbindUserView(UserView.this);
+        }
+    };
+
     public UserView(User user) {
         this.user = user;
+        this.user.bindUserView(this);
 
         Color backgroundColor = new Color(220, 240, 255);
 
@@ -54,6 +69,7 @@ public class UserView extends JFrame {
         this.setSize(500, 500);
         this.setLayout(new GridLayout(0, 1));
         this.setBackground(backgroundColor);
+        this.addWindowListener(windowClose);
 
         // Set up follow control panel
         JPanel followControlPanel = new JPanel();
@@ -95,6 +111,11 @@ public class UserView extends JFrame {
 
         this.setVisible(true);
 
+    }
+
+    @Override
+    public void update() {
+        System.out.println(user.getId() + " displayed!");
     }
 
 }
