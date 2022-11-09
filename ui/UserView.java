@@ -36,8 +36,6 @@ public class UserView extends JFrame {
             
             if(userToFollow != null) {
                 user.follow(userToFollow);
-                // There is now a new user to follow, so need to rebind user view
-                // user.rebindUserView(UserView.this);
             }
             else {
                 System.out.println("Invalid User ID");
@@ -105,7 +103,7 @@ public class UserView extends JFrame {
         feedPanel = new JPanel();
         feedPanel.setBackground(backgroundColor);
         feedPanel.setLayout(new BoxLayout(feedPanel, BoxLayout.PAGE_AXIS));
-        drawFeed(user.getFeedMessages());
+        drawFeed(user.getOrderedFeedMessages());
         this.add(feedPanel);
         user.bindFeedView(this);
 

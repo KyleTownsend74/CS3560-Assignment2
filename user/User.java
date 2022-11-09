@@ -2,6 +2,7 @@ package user;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +49,10 @@ public class User extends UserComponent implements Observer {
         return foundUser;
     }
 
-    public Collection<Tweet> getFeedMessages() {
-        return feed.values();
+    public Collection<Tweet> getOrderedFeedMessages() {
+        List<Tweet> orderedFeed = new ArrayList<>(feed.values());
+        orderedFeed.sort(Comparator.comparing(Tweet::getOrderCreated));
+        return orderedFeed;
     }
 
     public void display(JPanel displayPanel) {
@@ -89,7 +92,7 @@ public class User extends UserComponent implements Observer {
             }
         }
 
-        curFeedView.drawFeed(feed.values());
+        curFeedView.drawFeed(getOrderedFeedMessages());
     }
 
 }
