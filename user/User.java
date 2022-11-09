@@ -1,7 +1,10 @@
 package user;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -14,19 +17,23 @@ public class User extends UserComponent implements Observer {
     
     private static List<User> allUsers = new ArrayList<>();
 
+    private UserView curFeedView;
     private List<User> followers;
     private List<User> followings;
 
     // Each User has an object holding the Tweets that they themselves have posted.
     // This object is a Subject for other Users (Observers) to subscribe to
     private PostedTweets tweetsPosted;
-    // private List<Tweet> feed;
+    // Feed is a map from Tweet ID to the Tweet itself
+    // Need ID easily accessible to keep track of which Tweets are in feed
+    private Map<String, Tweet> feed;
 
     public User(String id) {
         super(id);
         allUsers.add(this);
         followings = new ArrayList<>();
         tweetsPosted = new PostedTweets();
+        feed = new HashMap<>();
     }
 
     public static User getUserById(String id) {
@@ -39,6 +46,10 @@ public class User extends UserComponent implements Observer {
         }
 
         return foundUser;
+    }
+
+    public Collection<Tweet> getFeedMessages() {
+        return feed.values();
     }
 
     public void display(JPanel displayPanel) {
@@ -55,28 +66,30 @@ public class User extends UserComponent implements Observer {
         followings.add(user);
     }
 
-    // Bind the user view to observe all of the tweets from the users
-    // this user is following
-    public void bindUserView(UserView userView) {
-        for(User followedUser : followings) {
-            followedUser.tweetsPosted.attachObserver(userView);
-        }
+    // Bind the instance of the UserView to the User
+    public void bindFeedView(UserView feedView) {
+        curFeedView = feedView;
     }
 
-    public void unbindUserView(UserView userView) {
-        for(User followedUser : followings) {
-            followedUser.tweetsPosted.detachObserver(userView);
-        }
-    }
-
-    public void rebindUserView(UserView userView) {
-        unbindUserView(userView);
-        bindUserView(userView);
+    public void unbindFeedView() {
+        curFeedView = null;
     }
 
     @Override
     public void update() {
-        System.out.println(getId() + " has been updated");
+        for(User followedUser : followings) {
+            List<Tweet> tweetsByUser = followedUser.tweetsPosted.getTweets();
+
+            for(Tweet tweet : tweetsByUser) {
+                String curTweetId = tweet.getId();
+
+                if(!feed.containsKey(curTweetId)) {
+                    feed.put(curTweetId, tweet);
+                }
+            }
+        }
+
+        curFeedView.drawFeed(feed.values());
     }
 
 }

@@ -19,4 +19,8 @@ public class PostedTweets extends Subject {
         notifyObservers();
     }
 
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
 }

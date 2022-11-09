@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Collection;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,13 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import observable.Observer;
 import tweet.Tweet;
 import user.User;
 
-public class UserView extends JFrame implements Observer {
+public class UserView extends JFrame {
     
     private User user;
+    private JPanel feedPanel;
     private JTextField textFollow;
     private JTextField textTweet;
     private JButton btnFollow;
@@ -36,7 +37,7 @@ public class UserView extends JFrame implements Observer {
             if(userToFollow != null) {
                 user.follow(userToFollow);
                 // There is now a new user to follow, so need to rebind user view
-                user.rebindUserView(UserView.this);
+                // user.rebindUserView(UserView.this);
             }
             else {
                 System.out.println("Invalid User ID");
@@ -54,13 +55,12 @@ public class UserView extends JFrame implements Observer {
     private WindowListener windowClose = new WindowAdapter() {
         @Override
         public void windowClosing(WindowEvent e) {
-            user.unbindUserView(UserView.this);
+            user.unbindFeedView();
         }
     };
 
     public UserView(User user) {
         this.user = user;
-        this.user.bindUserView(this);
 
         Color backgroundColor = new Color(220, 240, 255);
 
@@ -102,20 +102,26 @@ public class UserView extends JFrame implements Observer {
         this.add(tweetPanel);
 
         // Set up feed panel
-        JPanel feedPanel = new JPanel();
+        feedPanel = new JPanel();
         feedPanel.setBackground(backgroundColor);
         feedPanel.setLayout(new BoxLayout(feedPanel, BoxLayout.PAGE_AXIS));
-        JLabel feedLabel = new JLabel("News Feed");
-        feedPanel.add(feedLabel);
+        drawFeed(user.getFeedMessages());
         this.add(feedPanel);
+        user.bindFeedView(this);
 
         this.setVisible(true);
 
     }
 
-    @Override
-    public void update() {
-        System.out.println(user.getId() + " displayed!");
+    public void drawFeed(Collection<Tweet> feed) {
+        feedPanel.removeAll();
+        JLabel feedLabel = new JLabel("News Feed");
+        feedPanel.add(feedLabel);
+        for(Tweet curTweet : feed) {
+            feedPanel.add(new JLabel(curTweet.getName() + " : " + curTweet.getMessage()));
+        }
+        feedPanel.revalidate();
+        feedPanel.repaint();
     }
 
 }
