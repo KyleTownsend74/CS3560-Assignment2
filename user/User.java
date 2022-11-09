@@ -13,10 +13,12 @@ import observable.Observer;
 import tweet.PostedTweets;
 import tweet.Tweet;
 import ui.UserView;
+import visitor.NodeVisitor;
 
 public class User extends UserComponent implements Observer {
     
     private static List<User> allUsers = new ArrayList<>();
+    private static int userTotal = 0;
 
     private UserView curFeedView;
     private List<User> followers;
@@ -47,6 +49,14 @@ public class User extends UserComponent implements Observer {
         }
 
         return foundUser;
+    }
+
+    public static int getUserTotal() {
+        return userTotal;
+    }
+
+    public void incrementUserTotal() {
+        userTotal++;
     }
 
     public Collection<Tweet> getOrderedFeedMessages() {
@@ -93,6 +103,11 @@ public class User extends UserComponent implements Observer {
         }
 
         curFeedView.drawFeed(getOrderedFeedMessages());
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

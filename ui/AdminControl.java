@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import user.User;
 import user.UserComponent;
 import user.UserGroup;
+import visitor.AnalysisVisitor;
+import visitor.NodeVisitor;
 
 public class AdminControl extends JFrame {
 
@@ -59,13 +61,13 @@ public class AdminControl extends JFrame {
     private ActionListener actShowUserTotal = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Show User Total");
+            System.out.println("User Total: " + User.getUserTotal());
         }
     };
     private ActionListener actShowGroupTotal = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Show Group Total");
+            System.out.println("Group Total: " + UserGroup.getGroupTotal());
         }
     };
     private ActionListener actShowMessagesTotal = new ActionListener() {
@@ -169,6 +171,9 @@ public class AdminControl extends JFrame {
         else {
             root.add(componentToAdd);
         }
+
+        NodeVisitor analysisVisitor = new AnalysisVisitor();
+        componentToAdd.accept(analysisVisitor);
     }
 
     public void drawTree() {

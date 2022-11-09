@@ -8,8 +8,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ui.AdminControl;
+import visitor.Node;
 
-public abstract class UserComponent {
+public abstract class UserComponent implements Node {
     
     private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
     private static final Color SELECTED = new Color(160, 180, 255);
