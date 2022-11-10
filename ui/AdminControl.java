@@ -62,28 +62,24 @@ public class AdminControl extends JFrame {
     private ActionListener actShowUserTotal = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // System.out.println("User Total: " + User.getUserTotal());
             new StatWindow("User Total: " + User.getUserTotal());
         }
     };
     private ActionListener actShowGroupTotal = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // System.out.println("Group Total: " + UserGroup.getGroupTotal());
             new StatWindow("Group Total: " + UserGroup.getGroupTotal());
         }
     };
     private ActionListener actShowMessagesTotal = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // System.out.println("Messages Total: " + Tweet.getTweetTotal());
             new StatWindow("Messages Total: " + Tweet.getTweetTotal());
         }
     };
     private ActionListener actShowPosPercent = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // System.out.println("Positive Percentage: " + Tweet.getPositivePercentage() + "%");
             new StatWindow("Positive Percentage: " + Tweet.getPositivePercentage() + "%");
         }
     };

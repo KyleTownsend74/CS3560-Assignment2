@@ -37,6 +37,7 @@ public class User extends UserComponent implements Observer {
         followings = new ArrayList<>();
         tweetsPosted = new PostedTweets();
         feed = new HashMap<>();
+        follow(this); // User follows itself to see own tweets
     }
 
     public static User getUserById(String id) {
