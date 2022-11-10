@@ -52,6 +52,13 @@ public abstract class UserComponent implements Node {
                     label.setOpaque(true);
                     label.setBackground(SELECTED);
                     AdminControl.curUserSelected = UserComponent.this;
+
+                    if(AdminControl.curUserSelected instanceof User) {
+                        AdminControl.getInstance().enableUserView();
+                    }
+                    else {
+                        AdminControl.getInstance().disableUserView();
+                    }
                 }
             });
         }

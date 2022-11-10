@@ -131,6 +131,7 @@ public class AdminControl extends JFrame {
         btnOpenUserView.addActionListener(actOpenUserView);
         uvOpenPanel.add(btnOpenUserView);
         controlPanel.add(uvOpenPanel);
+        disableUserView();
 
         // Set up stats view panel
         JPanel statsPanel = new JPanel();
@@ -160,6 +161,14 @@ public class AdminControl extends JFrame {
         }
 
         return instance;
+    }
+
+    public void enableUserView() {
+        btnOpenUserView.setEnabled(true);
+    }
+
+    public void disableUserView() {
+        btnOpenUserView.setEnabled(false);
     }
 
     // Add a UserComponent to a UserGroup
