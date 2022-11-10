@@ -10,7 +10,7 @@ public class Tweet implements Node {
     private static int nextCreated = 1;
     private static int tweetTotal = 0;
     private static int numPositive = 0;
-    private static double positivePercentage = 0;
+    private static int positivePercentage = 0;
 
     private int orderCreated;
     private String id;
@@ -28,7 +28,7 @@ public class Tweet implements Node {
         return tweetTotal;
     }
 
-    public static double getPositivePercentage() {
+    public static int getPositivePercentage() {
         return positivePercentage;
     }
 
@@ -37,7 +37,7 @@ public class Tweet implements Node {
             numPositive++;
         }
         
-        positivePercentage = ((double) numPositive / tweetTotal) * 100;
+        positivePercentage = (int) ((double) numPositive / tweetTotal * 100);
     }
 
     public void incrementTweetTotal() {
