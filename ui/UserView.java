@@ -40,6 +40,7 @@ public class UserView extends JFrame {
             
             if(userToFollow != null) {
                 user.follow(userToFollow);
+                textFollow.setText("");
             }
             else {
                 System.out.println("Invalid User ID");
@@ -50,6 +51,7 @@ public class UserView extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Tweet tweet = new Tweet(user.getId(), textTweet.getText());
+            textTweet.setText("");
             user.post(tweet);
             NodeVisitor analysisVisitor = new AnalysisVisitor();
             tweet.accept(analysisVisitor);

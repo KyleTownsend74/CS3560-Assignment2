@@ -41,6 +41,7 @@ public class AdminControl extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             addToGroup(new User(textUser.getText()));
+            textUser.setText("");
             drawTree();
         }
     };
@@ -48,6 +49,7 @@ public class AdminControl extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             addToGroup(new UserGroup(textGroup.getText()));
+            textGroup.setText("");
             drawTree();
         }
     };
