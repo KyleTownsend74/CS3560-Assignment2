@@ -37,7 +37,7 @@ public class Tweet implements Node {
             numPositive++;
         }
         
-        positivePercentage = numPositive / tweetTotal;
+        positivePercentage = ((double) numPositive / tweetTotal) * 100;
     }
 
     public void incrementTweetTotal() {

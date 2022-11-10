@@ -80,7 +80,7 @@ public class AdminControl extends JFrame {
     private ActionListener actShowPosPercent = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Positive Percentage: " + Tweet.getPositivePercentage());
+            System.out.println("Positive Percentage: " + Tweet.getPositivePercentage() + "%");
         }
     };
 

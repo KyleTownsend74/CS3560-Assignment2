@@ -23,8 +23,22 @@ public class AnalysisVisitor implements NodeVisitor {
 
     @Override
     public void visit(String message) {
-        // TODO: Implement positive message detection
-        Tweet.updatePositivePercent(true);
+        message = message.toLowerCase(); // Only need to search for lowercase words
+
+        if(message.contains("good")
+            || message.contains("great")
+            || message.contains("excellent")
+            || message.contains("fantastic")
+            || message.contains("awesome")
+            || message.contains("yay")
+            || message.contains("hooray")
+            || message.contains("joy"))
+        {
+            Tweet.updatePositivePercent(true);
+        }
+        else {
+            Tweet.updatePositivePercent(false);
+        }
     }
 
 }
