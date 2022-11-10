@@ -2,9 +2,15 @@ package tweet;
 
 import java.util.UUID;
 
-public class Tweet {
+import visitor.Node;
+import visitor.NodeVisitor;
+
+public class Tweet implements Node {
     
     private static int nextCreated = 1;
+    private static int tweetTotal = 0;
+    private static int numPositive = 0;
+    private static double positivePercentage = 0;
 
     private int orderCreated;
     private String id;
@@ -16,6 +22,26 @@ public class Tweet {
         id = UUID.randomUUID().toString();
         this.name = name;
         this.message = message;
+    }
+
+    public static int getTweetTotal() {
+        return tweetTotal;
+    }
+
+    public static double getPositivePercentage() {
+        return positivePercentage;
+    }
+
+    public static void updatePositivePercent(boolean isPositive) {
+        if(isPositive) {
+            numPositive++;
+        }
+        
+        positivePercentage = numPositive / tweetTotal;
+    }
+
+    public void incrementTweetTotal() {
+        tweetTotal++;
     }
 
     public int getOrderCreated() {
@@ -32,6 +58,12 @@ public class Tweet {
 
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visit(this);
+        visitor.visit(message);
     }
 
 }

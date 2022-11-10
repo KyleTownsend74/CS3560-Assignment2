@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import tweet.Tweet;
 import user.User;
 import user.UserComponent;
 import user.UserGroup;
@@ -73,13 +74,13 @@ public class AdminControl extends JFrame {
     private ActionListener actShowMessagesTotal = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Show Messages Total");
+            System.out.println("Messages Total: " + Tweet.getTweetTotal());
         }
     };
     private ActionListener actShowPosPercent = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Show Positive Percentage");
+            System.out.println("Positive Percentage: " + Tweet.getPositivePercentage());
         }
     };
 

@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 
 import tweet.Tweet;
 import user.User;
+import visitor.AnalysisVisitor;
+import visitor.NodeVisitor;
 
 public class UserView extends JFrame {
     
@@ -45,7 +47,10 @@ public class UserView extends JFrame {
     private ActionListener actTweet = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            user.post(new Tweet(user.getId(), textTweet.getText()));
+            Tweet tweet = new Tweet(user.getId(), textTweet.getText());
+            user.post(tweet);
+            NodeVisitor analysisVisitor = new AnalysisVisitor();
+            tweet.accept(analysisVisitor);
         }
     };
 
