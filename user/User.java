@@ -34,6 +34,7 @@ public class User extends UserComponent implements Observer {
     public User(String id) {
         super(id);
         allUsers.add(this);
+        followers = new ArrayList<>();
         followings = new ArrayList<>();
         tweetsPosted = new PostedTweets();
         feed = new HashMap<>();
@@ -82,6 +83,7 @@ public class User extends UserComponent implements Observer {
     public void follow(User user) {
         user.tweetsPosted.attachObserver(this);
         followings.add(user);
+        user.followers.add(this);
 
         if(curUserView != null) {
             curUserView.drawFollowing(followings);
