@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ import visitor.NodeVisitor;
 public class UserView extends JFrame {
     
     private User user;
+    JPanel followDisplayPanel;
     private JPanel feedPanel;
     private JTextField textFollow;
     private JTextField textTweet;
@@ -58,12 +60,13 @@ public class UserView extends JFrame {
     private WindowListener windowClose = new WindowAdapter() {
         @Override
         public void windowClosing(WindowEvent e) {
-            user.unbindFeedView();
+            user.unbindUserView();
         }
     };
 
     public UserView(User user) {
         this.user = user;
+        user.bindUserView(this);
 
         Color backgroundColor = new Color(220, 240, 255);
 
@@ -86,11 +89,10 @@ public class UserView extends JFrame {
         this.add(followControlPanel);
 
         // Set up follow display panel
-        JPanel followDisplayPanel = new JPanel();
+        followDisplayPanel = new JPanel();
         followDisplayPanel.setBackground(backgroundColor);
         followDisplayPanel.setLayout(new BoxLayout(followDisplayPanel, BoxLayout.PAGE_AXIS));
-        JLabel followLabel = new JLabel("Current Following");
-        followDisplayPanel.add(followLabel);
+        drawFollowing(user.getFollowings());
         this.add(followDisplayPanel);
 
         // Set up tweet panel
@@ -110,10 +112,8 @@ public class UserView extends JFrame {
         feedPanel.setLayout(new BoxLayout(feedPanel, BoxLayout.PAGE_AXIS));
         drawFeed(user.getOrderedFeedMessages());
         this.add(feedPanel);
-        user.bindFeedView(this);
 
         this.setVisible(true);
-
     }
 
     public void drawFeed(Collection<Tweet> feed) {
@@ -125,6 +125,21 @@ public class UserView extends JFrame {
         }
         feedPanel.revalidate();
         feedPanel.repaint();
+    }
+
+    public void drawFollowing(List<User> followings) {
+        followDisplayPanel.removeAll();
+        JLabel followLabel = new JLabel("Current Following");
+        followDisplayPanel.add(followLabel);
+        for(User following : followings) {
+            String followingId = following.getId();
+
+            if(!followingId.equals(user.getId())) {
+                followDisplayPanel.add(new JLabel(" - " + following.getId()));
+            }
+        }
+        followDisplayPanel.revalidate();
+        followDisplayPanel.repaint();
     }
 
 }

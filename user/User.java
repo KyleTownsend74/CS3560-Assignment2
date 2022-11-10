@@ -20,7 +20,7 @@ public class User extends UserComponent implements Observer {
     private static List<User> allUsers = new ArrayList<>();
     private static int userTotal = 0;
 
-    private UserView curFeedView;
+    private UserView curUserView;
     private List<User> followers;
     private List<User> followings;
 
@@ -56,6 +56,10 @@ public class User extends UserComponent implements Observer {
         return userTotal;
     }
 
+    public List<User> getFollowings() {
+        return followings;
+    }
+
     public void incrementUserTotal() {
         userTotal++;
     }
@@ -78,15 +82,19 @@ public class User extends UserComponent implements Observer {
     public void follow(User user) {
         user.tweetsPosted.attachObserver(this);
         followings.add(user);
+
+        if(curUserView != null) {
+            curUserView.drawFollowing(followings);
+        }
     }
 
     // Bind the instance of the UserView to the User
-    public void bindFeedView(UserView feedView) {
-        curFeedView = feedView;
+    public void bindUserView(UserView feedView) {
+        curUserView = feedView;
     }
 
-    public void unbindFeedView() {
-        curFeedView = null;
+    public void unbindUserView() {
+        curUserView = null;
     }
 
     @Override
@@ -103,7 +111,7 @@ public class User extends UserComponent implements Observer {
             }
         }
 
-        curFeedView.drawFeed(getOrderedFeedMessages());
+        curUserView.drawFeed(getOrderedFeedMessages());
     }
 
     @Override
