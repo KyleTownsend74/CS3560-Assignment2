@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import tweet.Tweet;
 import user.User;
@@ -58,6 +60,26 @@ public class UserView extends JFrame {
         }
     };
 
+    // Document listener for when text fields are empty or populated
+    private DocumentListener textChange = new DocumentListener() {
+
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            textChanged();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            textChanged();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            textChanged();
+        }
+        
+    };
+
     // Window listener for when this view is closed
     private WindowListener windowClose = new WindowAdapter() {
         @Override
@@ -84,9 +106,11 @@ public class UserView extends JFrame {
         followControlPanel.setBackground(backgroundColor);
         followControlPanel.setLayout(new GridLayout(1, 2));
         textFollow = new JTextField(16);
+        textFollow.getDocument().addDocumentListener(textChange);
         followControlPanel.add(textFollow);
         btnFollow = new JButton("Follow User");
         btnFollow.addActionListener(actFollow);
+        btnFollow.setEnabled(false);
         followControlPanel.add(btnFollow);
         this.add(followControlPanel);
 
@@ -102,9 +126,11 @@ public class UserView extends JFrame {
         tweetPanel.setBackground(backgroundColor);
         tweetPanel.setLayout(new GridLayout(1, 2));
         textTweet = new JTextField(16);
+        textTweet.getDocument().addDocumentListener(textChange);
         tweetPanel.add(textTweet);
         btnTweet = new JButton("Post Tweet");
         btnTweet.addActionListener(actTweet);
+        btnTweet.setEnabled(false);
         tweetPanel.add(btnTweet);
         this.add(tweetPanel);
 
@@ -116,6 +142,22 @@ public class UserView extends JFrame {
         this.add(feedPanel);
 
         this.setVisible(true);
+    }
+
+    private void textChanged() {
+        if(textFollow.getText().isEmpty()) {
+            btnFollow.setEnabled(false);
+        }
+        else {
+            btnFollow.setEnabled(true);
+        }
+
+        if(textTweet.getText().isEmpty()) {
+            btnTweet.setEnabled(false);
+        }
+        else {
+            btnTweet.setEnabled(true);
+        }
     }
 
     public void drawFeed(Collection<Tweet> feed) {
