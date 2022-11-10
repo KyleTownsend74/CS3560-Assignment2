@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -92,10 +93,12 @@ public class UserView extends JFrame {
         this.user = user;
         user.bindUserView(this);
 
+        ImageIcon icon = new ImageIcon("assets/twitter-logo.jpg");
         Color backgroundColor = new Color(220, 240, 255);
 
         // Set up frame
         this.setTitle("User View - " + user.getId());
+        this.setIconImage(icon.getImage());
         this.setSize(500, 500);
         this.setLayout(new GridLayout(0, 1));
         this.setBackground(backgroundColor);

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -89,8 +90,11 @@ public class AdminControl extends JFrame {
     private AdminControl () {
         root = new UserGroup("Root");
 
+        ImageIcon icon = new ImageIcon("assets/twitter-logo.jpg");
+
         // Set up frame
         this.setTitle("Twitter");
+        this.setIconImage(icon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 500);
         this.setLayout(new GridLayout(1, 2));
