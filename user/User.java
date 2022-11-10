@@ -73,7 +73,7 @@ public class User extends UserComponent implements Observer {
 
     public void display(JPanel displayPanel) {
         // Dislay ID for current User
-        displayPanel.add(getLabel("User - " + getId()));
+        displayPanel.add(getLabel("\uD83D\uDC64 " + getId()));
     }
 
     public void post(Tweet tweet) {
