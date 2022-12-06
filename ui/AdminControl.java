@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -32,6 +33,8 @@ public class AdminControl extends JFrame {
     private JButton btnAddUser;
     private JButton btnAddGroup;
     private JButton btnOpenUserView;
+    private JButton btnValidateIds;
+    private JButton btnLastUpdatedUser;
     private JButton btnShowUserTotal;
     private JButton btnShowGroupTotal;
     private JButton btnShowMessagesTotal;
@@ -60,6 +63,38 @@ public class AdminControl extends JFrame {
             if(curUserSelected instanceof User) {
                 new UserView((User) curUserSelected);
             }
+        }
+    };
+    private ActionListener actValidateIds = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String message;
+            boolean isValid = UserComponent.validateIds();
+
+            if(isValid) {
+                message = "All IDs are valid!";
+            }
+            else {
+                message = "Not all IDs are valid";
+            }
+
+            JOptionPane.showMessageDialog(AdminControl.this, message);
+        }
+    };
+    private ActionListener actLastUpdatedUser = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String message;
+            User lastUpdatedUser = User.getLastUpdatedUser();
+
+            if(lastUpdatedUser != null) {
+                message = "Last Updated User: " + User.getLastUpdatedUser().getId();
+            }
+            else {
+                message = "No Users Exist";
+            }
+
+            JOptionPane.showMessageDialog(AdminControl.this, message);
         }
     };
     private ActionListener actShowUserTotal = new ActionListener() {
@@ -132,10 +167,16 @@ public class AdminControl extends JFrame {
         // Set up UV (User View) open view panel
         JPanel uvOpenPanel = new JPanel();
         uvOpenPanel.setBackground(controlPanelColor);
-        uvOpenPanel.setLayout(new GridLayout(2, 1));
+        uvOpenPanel.setLayout(new GridLayout(3, 1));
         btnOpenUserView = new JButton("Open User View");
         btnOpenUserView.addActionListener(actOpenUserView);
         uvOpenPanel.add(btnOpenUserView);
+        btnValidateIds = new JButton("Validate IDs");
+        btnValidateIds.addActionListener(actValidateIds);
+        uvOpenPanel.add(btnValidateIds);
+        btnLastUpdatedUser = new JButton("Show Last Updated User");
+        btnLastUpdatedUser.addActionListener(actLastUpdatedUser);
+        uvOpenPanel.add(btnLastUpdatedUser);
         controlPanel.add(uvOpenPanel);
         disableUserView();
 

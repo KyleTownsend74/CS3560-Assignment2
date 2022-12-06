@@ -21,6 +21,7 @@ public class User extends UserComponent implements Observer {
     private static int userTotal = 0;
 
     private UserView curUserView;
+    private long lastUpdateTime;
     private List<User> followers;
     private List<User> followings;
 
@@ -33,6 +34,7 @@ public class User extends UserComponent implements Observer {
 
     public User(String id) {
         super(id);
+        lastUpdateTime = getCreationTime();
         allUsers.add(this);
         followers = new ArrayList<>();
         followings = new ArrayList<>();
@@ -53,8 +55,28 @@ public class User extends UserComponent implements Observer {
         return foundUser;
     }
 
+    public static User getLastUpdatedUser() {
+        User lastUpdatedUser = null;
+        long curLastUpdateTime = 0;
+
+        for(User user : allUsers) {
+            long curUserUpdateTime = user.getLastUpdateTime();
+
+            if(curUserUpdateTime > curLastUpdateTime) {
+                curLastUpdateTime = curUserUpdateTime;
+                lastUpdatedUser = user;
+            }
+        }
+        
+        return lastUpdatedUser;
+    }
+
     public static int getUserTotal() {
         return userTotal;
+    }
+
+    public long getLastUpdateTime() {
+        return lastUpdateTime;
     }
 
     public List<User> getFollowings() {
@@ -113,6 +135,8 @@ public class User extends UserComponent implements Observer {
             }
         }
 
+        lastUpdateTime = System.currentTimeMillis();
+        curUserView.drawInfo();
         curUserView.drawFeed(getOrderedFeedMessages());
     }
 

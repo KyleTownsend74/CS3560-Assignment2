@@ -28,7 +28,8 @@ import visitor.NodeVisitor;
 public class UserView extends JFrame {
     
     private User user;
-    JPanel followDisplayPanel;
+    private JPanel infoPanel;
+    private JPanel followDisplayPanel;
     private JPanel feedPanel;
     private JTextField textFollow;
     private JTextField textTweet;
@@ -104,6 +105,13 @@ public class UserView extends JFrame {
         this.setBackground(backgroundColor);
         this.addWindowListener(windowClose);
 
+        // Set up info panel
+        infoPanel = new JPanel();
+        infoPanel.setBackground(backgroundColor);
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.PAGE_AXIS));
+        drawInfo();
+        this.add(infoPanel);
+
         // Set up follow control panel
         JPanel followControlPanel = new JPanel();
         followControlPanel.setBackground(backgroundColor);
@@ -161,6 +169,16 @@ public class UserView extends JFrame {
         else {
             btnTweet.setEnabled(true);
         }
+    }
+
+    public void drawInfo() {
+        infoPanel.removeAll();
+        JLabel creationTimeLabel = new JLabel("User created at: " + user.getCreationTime());
+        JLabel updateTimeLabel = new JLabel("User last updated at: " + user.getLastUpdateTime());
+        infoPanel.add(creationTimeLabel);
+        infoPanel.add(updateTimeLabel);
+        infoPanel.revalidate();
+        infoPanel.repaint();
     }
 
     public void drawFeed(Collection<Tweet> feed) {

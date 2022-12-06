@@ -3,6 +3,8 @@ package user;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,22 +17,46 @@ public abstract class UserComponent implements Node {
     private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
     private static final Color SELECTED = new Color(160, 180, 255);
 
+    private static List<String> allIds = new ArrayList<>();
+
     // Spacing to add to start of label for UserComponent in tree view
     protected static int spacing = 0;
 
     private String id;
+    private long creationTime;
     private JLabel label;
 
     public UserComponent(String id) {
-        this.id = id;
+        setId(id);
+        creationTime = System.currentTimeMillis();
+    }
+
+    // Returns true if all IDs (Users and UserGroups) are valid, false otherwise
+    public static boolean validateIds() {
+        boolean isValid = true;
+
+        for(String curId : allIds) {
+            // Spaces or duplicates will make ID invalid
+            if(curId.contains(" ") || (allIds.indexOf(curId)
+                    != allIds.lastIndexOf(curId))) {
+                isValid = false;
+            }
+        }
+
+        return isValid;
     }
 
     public void setId(String id) {
         this.id = id;
+        allIds.add(id);
     }
 
     public String getId() {
         return id;
+    }
+
+    public long getCreationTime() {
+        return creationTime;
     }
 
     protected JLabel getLabel(String labelText) {
